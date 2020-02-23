@@ -9,7 +9,6 @@ function App() {
           <code>src/App.js</code>
           and save to reload.
         </p>
-        <img />
         <a
           className="App-link"
           href="https://reactjs.org"

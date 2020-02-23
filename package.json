@@ -49,6 +49,10 @@
     "*.jsx": [
       "prettier -- config .prettierrc --write",
       "eslint --fix"
+    ],
+    "*.js": [
+      "prettier -- config .prettierrc --write",
+      "eslint --fix"
     ]
   }
 }
