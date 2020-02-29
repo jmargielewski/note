@@ -3,7 +3,6 @@ import { action } from '@storybook/addon-actions';
 import { select, withKnobs } from '@storybook/addon-knobs';
 import Button from './Button';
 
-
 const label = 'Colors';
 const options = {
   Primary: 'hsl(49, 100%, 58%)',
