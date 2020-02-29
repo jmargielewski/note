@@ -7,7 +7,7 @@
     "document": true
   },
   "rules": {
-    "import/no-extraneous-dependencies"
+    "import/no-extraneous-dependencies": 0
   },
   "settings": {
     "import/resolver": {
