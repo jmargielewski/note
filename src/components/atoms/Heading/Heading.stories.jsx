@@ -1,5 +1,4 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
 import Heading from './Heading';
 
 export default {
@@ -7,4 +6,5 @@ export default {
   title: 'Heading',
 };
 
-export const big = () => <Heading onClick={action('clicked')}>Heading</Heading>;
+export const normal = () => <Heading>Heading</Heading>;
+export const big = () => <Heading big>Heading</Heading>;

@@ -1,5 +1,4 @@
 import React from 'react';
-import { action } from '@storybook/addon-actions';
 import Paragraph from './Paragraph';
 
 export default {
@@ -7,4 +6,4 @@ export default {
   title: 'Paragraph',
 };
 
-export const big = () => <Paragraph onClick={action('clicked')}>Paragraph</Paragraph>;
+export const paragraph = () => <Paragraph>Paragraph</Paragraph>;
