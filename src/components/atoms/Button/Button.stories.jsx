@@ -16,7 +16,7 @@ const value = select(label, options, defaultValue, groupId);
 
 export default {
   component: Button,
-  title: 'Button',
+  title: 'Atoms/Button',
   decorators: [withKnobs],
 };
 
