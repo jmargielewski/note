@@ -13,6 +13,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     body {
+        margin-left: 150px;
         font-size: 1.6rem;
         font-family: "Montserrat", sans-serif;
     }
