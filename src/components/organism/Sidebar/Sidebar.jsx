@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { NavLink } from 'react-router-dom';
 
@@ -16,7 +17,7 @@ const StyledWrapper = styled.nav`
   padding: 25px 0;
   width: 150px;
   height: 100vh;
-  background-color: ${({ theme }) => theme.note};
+  background-color: ${({ activeColor, theme }) => (activeColor ? theme[activeColor] : theme.note)};
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -45,9 +46,9 @@ const StyledLinksList = styled.ul`
   list-style: none;
 `;
 
-const Sidebar = () => (
+const Sidebar = ({ pageType }) => (
   <div>
-    <StyledWrapper>
+    <StyledWrapper activeColor={pageType}>
       <StyledLogoLink to="/" />
       <StyledLinksList>
         <li>
@@ -64,5 +65,13 @@ const Sidebar = () => (
     </StyledWrapper>
   </div>
 );
+
+Sidebar.propTypes = {
+  pageType: PropTypes.oneOf(['note', 'twitter', 'article']),
+};
+
+Sidebar.defaultProps = {
+  pageType: 'note',
+};
 
 export default Sidebar;
