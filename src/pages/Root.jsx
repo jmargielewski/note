@@ -1,11 +1,17 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import MainTemplate from 'templates/MainTemplate';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
+
 import Notes from 'pages/Notes';
 import Twitter from 'pages/Twitter';
 import Articles from 'pages/Articles';
-import UserPageTemplate from '../templates/UserPageTemplate';
+import Details from 'pages/Details';
+
+import MainTemplate from 'templates/MainTemplate';
+import GridTemplate from 'templates/GridTemplate';
+import DetailsTemplate from 'templates/DetailsTemplate';
+
+import routes from 'routes';
 
 const UserPageRoute = ({ component: Component, layout: Layout, pageType, ...rest }) => (
   /* eslint-disable react/jsx-props-no-spreading */
@@ -21,13 +27,13 @@ const UserPageRoute = ({ component: Component, layout: Layout, pageType, ...rest
 );
 
 UserPageRoute.propTypes = {
-  pageType: PropTypes.oneOf(['note', 'twitter', 'article']),
+  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   component: PropTypes.element.isRequired,
-  layout: PropTypes.instanceOf(UserPageTemplate).isRequired,
+  layout: PropTypes.instanceOf(GridTemplate || DetailsTemplate).isRequired,
 };
 
 UserPageRoute.defaultProps = {
-  pageType: 'note',
+  pageType: 'notes',
 };
 
 const Root = () => {
@@ -35,24 +41,45 @@ const Root = () => {
     <BrowserRouter>
       <MainTemplate>
         <Switch>
+          <Route exact path={routes.home} render={() => <Redirect to="/notes" />} />
           <UserPageRoute
             exact
-            path="/"
-            layout={UserPageTemplate}
+            path={routes.notes}
+            layout={GridTemplate}
             component={Notes}
-            pageType="note"
+            pageType="notes"
           />
           <UserPageRoute
-            path="/twitters"
-            layout={UserPageTemplate}
+            path={routes.note}
+            layout={DetailsTemplate}
+            component={Details}
+            pageType="notes"
+          />
+          <UserPageRoute
+            exact
+            path={routes.twitters}
+            layout={GridTemplate}
             component={Twitter}
-            pageType="twitter"
+            pageType="twitters"
           />
           <UserPageRoute
-            path="/articles"
-            layout={UserPageTemplate}
+            path={routes.twitter}
+            layout={DetailsTemplate}
+            component={Details}
+            pageType="twitters"
+          />
+          <UserPageRoute
+            exact
+            path={routes.articles}
+            layout={GridTemplate}
             component={Articles}
-            pageType="article"
+            pageType="articles"
+          />
+          <UserPageRoute
+            path={routes.article}
+            layout={DetailsTemplate}
+            component={Details}
+            pageType="articles"
           />
         </Switch>
       </MainTemplate>

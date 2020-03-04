@@ -6,6 +6,6 @@ export default {
   title: 'Molecules/Card',
 };
 
-export const note = () => <Card />;
-export const twitter = () => <Card cardType="twitter" />;
-export const article = () => <Card cardType="article" />;
+export const notes = () => <Card />;
+export const twitters = () => <Card cardType="twitters" />;
+export const articles = () => <Card cardType="articles" />;
