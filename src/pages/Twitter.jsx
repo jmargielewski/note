@@ -1,7 +1,17 @@
 import React from 'react';
+import Card from 'components/molecules/Card/Card';
 
 const Twitter = () => {
-  return <h1>Twitter</h1>;
+  return (
+    <>
+      <Card cardType="twitter" />
+      <Card cardType="twitter" />
+      <Card cardType="twitter" />
+      <Card cardType="twitter" />
+      <Card cardType="twitter" />
+      <Card cardType="twitter" />
+    </>
+  );
 };
 
 export default Twitter;

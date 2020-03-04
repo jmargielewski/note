@@ -1,7 +1,17 @@
 import React from 'react';
+import Card from 'components/molecules/Card/Card';
 
 const Articles = () => {
-  return <h1>Articles</h1>;
+  return (
+    <>
+      <Card cardType="article" />
+      <Card cardType="article" />
+      <Card cardType="article" />
+      <Card cardType="article" />
+      <Card cardType="article" />
+      <Card cardType="article" />
+    </>
+  );
 };
 
 export default Articles;
