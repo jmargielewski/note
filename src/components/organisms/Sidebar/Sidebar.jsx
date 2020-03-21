@@ -10,7 +10,7 @@ import logoutIcon from 'assets/icons/logout.svg';
 import penIcon from 'assets/icons/pen.svg';
 import twitterIcon from 'assets/icons/twitter.svg';
 import logoIcon from 'assets/icons/logo.svg';
-import ButtonIcon from 'components/atoms/ButtonIcons/ButtonIcon';
+import ButtonIcon from 'components/atoms/ButtonIcon/ButtonIcon';
 
 const StyledWrapper = styled.nav`
   position: fixed;
