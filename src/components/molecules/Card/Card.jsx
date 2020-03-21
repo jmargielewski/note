@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Redirect } from 'react-router-dom';
 import styled, { css } from 'styled-components';
+import { connect } from 'react-redux';
+
+import { removeItem as removeItemAction } from 'actions';
 
 import Button from 'components/atoms/Button/Button';
 import Heading from 'components/atoms/Heading/Heading';
@@ -70,16 +73,21 @@ const StyledLinkButton = styled.a`
 `;
 
 class Card extends Component {
-  /* eslint-disable react/state-in-constructor */
-  state = {
-    redirect: false,
-  };
-  /* eslint-enable react/state-in-constructor */
+  state = { redirect: false };
 
   handleCardClick = () => this.setState({ redirect: true });
 
   render() {
-    const { id, cardType, title, created, twitterName, articleUrl, content } = this.props;
+    const {
+      id,
+      cardType,
+      title,
+      created,
+      twitterName,
+      articleUrl,
+      content,
+      removeItem,
+    } = this.props;
     const { redirect } = this.state;
 
     if (redirect) {
@@ -98,7 +106,9 @@ class Card extends Component {
         </InnerWrapper>
         <InnerWrapper flex>
           <Paragraph>{content}</Paragraph>
-          <Button secondary>REMOVE</Button>
+          <Button secondary onClick={() => removeItem(cardType, id)}>
+            REMOVE
+          </Button>
         </InnerWrapper>
       </StyledWrapper>
     );
@@ -107,12 +117,13 @@ class Card extends Component {
 
 Card.propTypes = {
   cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
-  id: PropTypes.string.isRequired,
+  id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
   twitterName: PropTypes.string,
   articleUrl: PropTypes.string,
   content: PropTypes.string.isRequired,
+  removeItem: PropTypes.func.isRequired,
 };
 
 Card.defaultProps = {
@@ -121,4 +132,4 @@ Card.defaultProps = {
   articleUrl: null,
 };
 
-export default Card;
+export default connect(null, { removeItem: removeItemAction })(Card);
