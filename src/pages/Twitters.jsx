@@ -3,16 +3,17 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Card from 'components/molecules/Card/Card';
 
-const Notes = ({ notes }) => {
+const Twitters = ({ twitters }) => {
   return (
     <>
-      {notes.map(({ id, title, content, created }) => (
+      {twitters.map(({ id, title, content, twitterName, created }) => (
         <Card
           key={title}
           id={id}
-          cardType="notes"
+          cardType="twitters"
           title={title}
           content={content}
+          twitterName={twitterName}
           created={created}
         />
       ))}
@@ -20,22 +21,23 @@ const Notes = ({ notes }) => {
   );
 };
 
-Notes.propTypes = {
-  notes: PropTypes.arrayOf(
+Twitters.propTypes = {
+  twitters: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
       // cardType: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
+      twitterName: PropTypes.string.isRequired,
       created: PropTypes.string.isRequired,
     }),
   ),
 };
 
-Notes.defaultProps = {
-  notes: [],
+Twitters.defaultProps = {
+  twitters: [],
 };
 
-const mapStateToProps = ({ notes }) => ({ notes });
+const mapStateToProps = ({ twitters }) => ({ twitters });
 
-export default connect(mapStateToProps)(Notes);
+export default connect(mapStateToProps)(Twitters);
