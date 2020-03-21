@@ -5,7 +5,8 @@
     "jest": true
   },
   "globals": {
-    "document": true
+    "document": true,
+    "window": true
   },
   "rules": {
     "import/no-extraneous-dependencies": 0
