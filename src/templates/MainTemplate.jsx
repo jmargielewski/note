@@ -35,8 +35,8 @@ class MainTemplate extends Component {
     const { children } = this.props;
     const { pageType } = this.state;
     return (
-      <div className="Root" value={pageType}>
-        <PageContext.Provider>
+      <div className="Root">
+        <PageContext.Provider value={pageType}>
           <GlobalStyle />
           <ThemeProvider theme={theme}>{children}</ThemeProvider>
         </PageContext.Provider>

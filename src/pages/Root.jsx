@@ -16,11 +16,11 @@ import DetailsTemplate from 'templates/DetailsTemplate';
 
 import routes from 'routes';
 
-const UserPageRoute = ({ component: Component, layout: Layout, pageType, ...rest }) => (
+const UserPageRoute = ({ component: Component, layout: Layout, ...rest }) => (
   <Route
     {...rest}
     render={props => (
-      <Layout pageType={pageType}>
+      <Layout>
         <Component {...props} />
       </Layout>
     )}
@@ -28,13 +28,8 @@ const UserPageRoute = ({ component: Component, layout: Layout, pageType, ...rest
 );
 
 UserPageRoute.propTypes = {
-  pageType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   component: PropTypes.func.isRequired,
   layout: PropTypes.instanceOf(GridTemplate || DetailsTemplate).isRequired,
-};
-
-UserPageRoute.defaultProps = {
-  pageType: 'notes',
 };
 
 const Root = () => {
@@ -44,45 +39,22 @@ const Root = () => {
         <MainTemplate>
           <Switch>
             <Route exact path={routes.home} render={() => <Redirect to="/notes" />} />
-            <UserPageRoute
-              exact
-              path={routes.notes}
-              layout={GridTemplate}
-              component={Notes}
-              pageType="notes"
-            />
-            <UserPageRoute
-              path={routes.note}
-              layout={DetailsTemplate}
-              component={Details}
-              pageType="notes"
-            />
+            <UserPageRoute exact path={routes.notes} layout={GridTemplate} component={Notes} />
+            <UserPageRoute path={routes.note} layout={DetailsTemplate} component={Details} />
             <UserPageRoute
               exact
               path={routes.twitters}
               layout={GridTemplate}
               component={Twitters}
-              pageType="twitters"
             />
-            <UserPageRoute
-              path={routes.twitter}
-              layout={DetailsTemplate}
-              component={Details}
-              pageType="twitters"
-            />
+            <UserPageRoute path={routes.twitter} layout={DetailsTemplate} component={Details} />
             <UserPageRoute
               exact
               path={routes.articles}
               layout={GridTemplate}
               component={Articles}
-              pageType="articles"
             />
-            <UserPageRoute
-              path={routes.article}
-              layout={DetailsTemplate}
-              component={Details}
-              pageType="articles"
-            />
+            <UserPageRoute path={routes.article} layout={DetailsTemplate} component={Details} />
           </Switch>
         </MainTemplate>
       </BrowserRouter>

@@ -10,7 +10,6 @@ const Articles = ({ articles }) => {
         <Card
           key={title}
           id={id}
-          cardType="articles"
           title={title}
           content={content}
           articleUrl={articleUrl}
@@ -25,7 +24,6 @@ Articles.propTypes = {
   articles: PropTypes.arrayOf(
     PropTypes.shape({
       id: PropTypes.number.isRequired,
-      // cardType: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
       articleUrl: PropTypes.string.isRequired,
@@ -41,4 +39,3 @@ Articles.defaultProps = {
 const mapStateToProps = ({ articles }) => ({ articles });
 
 export default connect(mapStateToProps)(Articles);
-

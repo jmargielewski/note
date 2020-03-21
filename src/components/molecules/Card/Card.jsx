@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components';
 import { connect } from 'react-redux';
 
 import { removeItem as removeItemAction } from 'actions';
+import withContext from 'hoc/withContext';
 
 import Button from 'components/atoms/Button/Button';
 import Heading from 'components/atoms/Heading/Heading';
@@ -80,7 +81,7 @@ class Card extends Component {
   render() {
     const {
       id,
-      cardType,
+      pageContext,
       title,
       created,
       twitterName,
@@ -91,22 +92,22 @@ class Card extends Component {
     const { redirect } = this.state;
 
     if (redirect) {
-      return <Redirect to={`${cardType}/${id}`} />;
+      return <Redirect to={`${pageContext}/${id}`} />;
     }
 
     return (
       <StyledWrapper onClick={this.handleCardClick}>
-        <InnerWrapper activeColor={cardType}>
+        <InnerWrapper activeColor={pageContext}>
           <StyledHeading>{title}</StyledHeading>
           <DateInfo>{created}</DateInfo>
-          {cardType === 'twitters' && (
+          {pageContext === 'twitters' && (
             <StyledAvatar src={`https://avatars.io/twitter/${twitterName}`} />
           )}
-          {cardType === 'articles' && <StyledLinkButton href={articleUrl} />}
+          {pageContext === 'articles' && <StyledLinkButton href={articleUrl} />}
         </InnerWrapper>
         <InnerWrapper flex>
           <Paragraph>{content}</Paragraph>
-          <Button secondary onClick={() => removeItem(cardType, id)}>
+          <Button secondary onClick={() => removeItem(pageContext, id)}>
             REMOVE
           </Button>
         </InnerWrapper>
@@ -116,7 +117,7 @@ class Card extends Component {
 }
 
 Card.propTypes = {
-  cardType: PropTypes.oneOf(['notes', 'twitters', 'articles']),
+  pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
   id: PropTypes.number.isRequired,
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
@@ -127,9 +128,9 @@ Card.propTypes = {
 };
 
 Card.defaultProps = {
-  cardType: 'notes',
+  pageContext: 'notes',
   twitterName: null,
   articleUrl: null,
 };
 
-export default connect(null, { removeItem: removeItemAction })(Card);
+export default connect(null, { removeItem: removeItemAction })(withContext(Card));
