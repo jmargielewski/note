@@ -21,30 +21,30 @@ export default {
 };
 
 export const primary = () => (
-  <Button activeColor="notes" color={value} onClick={action('clicked')}>
+  <Button activecolor="notes" color={value} onClick={action('clicked')}>
     Hello Button
   </Button>
 );
 export const secondary = () => (
-  <Button activeColor="notes" secondary onClick={action('clicked')}>
+  <Button activecolor="notes" secondary onClick={action('clicked')}>
     Hello Button
   </Button>
 );
 
 export const note = () => (
-  <Button activeColor="notes" color={value} onClick={action('clicked')}>
+  <Button activecolor="notes" color={value} onClick={action('clicked')}>
     Hello Button
   </Button>
 );
 
 export const twitter = () => (
-  <Button activeColor="twitters" color={value} onClick={action('clicked')}>
+  <Button activecolor="twitters" color={value} onClick={action('clicked')}>
     Hello Button
   </Button>
 );
 
 export const article = () => (
-  <Button activeColor="articles" color={value} onClick={action('clicked')}>
+  <Button activecolor="articles" color={value} onClick={action('clicked')}>
     Hello Button
   </Button>
 );

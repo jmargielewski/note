@@ -44,7 +44,7 @@ const StyledButtonIcon = styled(ButtonIcon)`
   position: fixed;
   bottom: 40px;
   right: 40px;
-  background-color: ${({ activeColor, theme }) => theme[activeColor]};
+  background-color: ${({ activecolor, theme }) => theme[activecolor]};
   background-size: 35%;
   border-radius: 50px;
   z-index: 1000;
@@ -53,7 +53,7 @@ const StyledButtonIcon = styled(ButtonIcon)`
 class GridTemplate extends Component {
   state = { isNewItemBarVisible: false };
 
-  handleNewItemBarToggle = () =>
+  toggleNewItemBar = () =>
     this.setState(prevState => ({
       isNewItemBarVisible: !prevState.isNewItemBarVisible,
     }));
@@ -74,11 +74,11 @@ class GridTemplate extends Component {
           </StyledPageHeader>
           <StyledGrid>{children}</StyledGrid>
           <StyledButtonIcon
-            onClick={this.handleNewItemBarToggle}
+            onClick={this.toggleNewItemBar}
             icon={plusIcon}
-            activeColor={pageContext}
+            activecolor={pageContext}
           />
-          <NewItemBar isVisible={isNewItemBarVisible} />
+          <NewItemBar handleClose={this.toggleNewItemBar} isVisible={isNewItemBarVisible} />
         </StyledWrapper>
       </UserPageTemplate>
     );

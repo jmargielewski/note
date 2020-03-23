@@ -106,7 +106,7 @@ class Details extends Component {
               href={`https://avatars.io/twitter/${dummyArticle.twitterName}`}
             />
           )}
-          <Button as={Link} to={`/${pageType}`} activeColor={pageType}>
+          <Button as={Link} to={`/${pageType}`} activecolor={pageType}>
             save / close
           </Button>
         </StyledWrapper>

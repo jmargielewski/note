@@ -26,7 +26,7 @@ const StyledWrapper = styled.div`
 const InnerWrapper = styled.div`
   position: relative;
   padding: 17px 30px 10px;
-  background-color: ${({ activeColor, theme }) => (activeColor ? theme[activeColor] : 'white')};
+  background-color: ${({ activecolor, theme }) => (activecolor ? theme[activecolor] : 'white')};
 
   ${({ flex }) =>
     flex &&
@@ -97,7 +97,7 @@ class Card extends Component {
 
     return (
       <StyledWrapper onClick={this.handleCardClick}>
-        <InnerWrapper activeColor={pageContext}>
+        <InnerWrapper activecolor={pageContext}>
           <StyledHeading>{title}</StyledHeading>
           <DateInfo>{created}</DateInfo>
           {pageContext === 'twitters' && (
@@ -118,7 +118,7 @@ class Card extends Component {
 
 Card.propTypes = {
   pageContext: PropTypes.oneOf(['notes', 'twitters', 'articles']),
-  id: PropTypes.number.isRequired,
+  id: PropTypes.string.isRequired,
   title: PropTypes.string.isRequired,
   created: PropTypes.string.isRequired,
   twitterName: PropTypes.string,
