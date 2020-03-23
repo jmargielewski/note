@@ -9,6 +9,7 @@ import Notes from 'pages/Notes';
 import Twitters from 'pages/Twitters';
 import Articles from 'pages/Articles';
 import Details from 'pages/Details';
+import LoginPage from 'pages/LoginPage';
 
 import MainTemplate from 'templates/MainTemplate';
 import GridTemplate from 'templates/GridTemplate';
@@ -28,8 +29,8 @@ const UserPageRoute = ({ component: Component, layout: Layout, ...rest }) => (
 );
 
 UserPageRoute.propTypes = {
-  component: PropTypes.func.isRequired,
-  layout: PropTypes.instanceOf(GridTemplate || DetailsTemplate).isRequired,
+  component: PropTypes.oneOfType([PropTypes.object, PropTypes.func]).isRequired,
+  layout: PropTypes.func.isRequired,
 };
 
 const Root = () => {
@@ -38,6 +39,7 @@ const Root = () => {
       <BrowserRouter>
         <MainTemplate>
           <Switch>
+            <Route exact path={routes.login} component={LoginPage} />
             <Route exact path={routes.home} render={() => <Redirect to="/notes" />} />
             <UserPageRoute exact path={routes.notes} layout={GridTemplate} component={Notes} />
             <UserPageRoute path={routes.note} layout={DetailsTemplate} component={Details} />
