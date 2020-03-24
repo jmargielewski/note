@@ -10,10 +10,12 @@ import Twitters from 'pages/Twitters';
 import Articles from 'pages/Articles';
 import Details from 'pages/Details';
 import LoginPage from 'pages/LoginPage';
+import RegisterPage from 'pages/RegisterPage';
 
 import MainTemplate from 'templates/MainTemplate';
 import GridTemplate from 'templates/GridTemplate';
 import DetailsTemplate from 'templates/DetailsTemplate';
+import AuthTemplate from 'templates/AuthTemplate';
 
 import routes from 'routes';
 
@@ -39,8 +41,14 @@ const Root = () => {
       <BrowserRouter>
         <MainTemplate>
           <Switch>
-            <Route exact path={routes.login} component={LoginPage} />
             <Route exact path={routes.home} render={() => <Redirect to="/notes" />} />
+            <UserPageRoute exact path={routes.login} layout={AuthTemplate} component={LoginPage} />
+            <UserPageRoute
+              exact
+              path={routes.register}
+              layout={AuthTemplate}
+              component={RegisterPage}
+            />
             <UserPageRoute exact path={routes.notes} layout={GridTemplate} component={Notes} />
             <UserPageRoute path={routes.note} layout={DetailsTemplate} component={Details} />
             <UserPageRoute

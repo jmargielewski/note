@@ -2,16 +2,17 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
+import { Link } from 'react-router-dom';
 
 import routes from 'routes';
 
-import { authenticate as authenticateAction } from 'actions';
-
+import AuthTemplate from 'templates/AuthTemplate';
+import Heading from 'components/atoms/Heading/Heading';
 import Input from 'components/atoms/Input/Input';
 import Button from 'components/atoms/Button/Button';
-import Heading from 'components/atoms/Heading/Heading';
+
+import { register as registerAction } from 'actions';
 
 const StyledForm = styled(Form)`
   display: flex;
@@ -35,16 +36,16 @@ const StyledLink = styled(Link)`
   margin: 20px 0 50px;
 `;
 
-const LoginPage = ({ userID, authenticate }) => (
-  <Formik
-    initialValues={{ username: '', password: '' }}
-    onSubmit={({ username, password }) => authenticate(username, password)}
-  >
-    {({ handleChange, handleBlur, values }) => {
-      if (userID) {
-        return <Redirect to={routes.home} />;
-      }
-      return (
+const RegisterPage = ({ register, history }) => (
+  <AuthTemplate>
+    <Formik
+      initialValues={{ username: '', password: '' }}
+      onSubmit={({ username, password }) => {
+        register(username, password);
+        history.push('/');
+      }}
+    >
+      {({ handleChange, handleBlur, values }) => (
         <>
           <Heading>Sign in</Heading>
           <StyledForm>
@@ -65,27 +66,27 @@ const LoginPage = ({ userID, authenticate }) => (
               value={values.title}
             />
             <Button activecolor="notes" type="submit">
-              sign in
+              register
             </Button>
           </StyledForm>
-          <StyledLink to={routes.register}>I want my account!</StyledLink>
+          <StyledLink to={routes.login}>I want to log in!</StyledLink>
         </>
-      );
-    }}
-  </Formik>
+      )}
+    </Formik>
+  </AuthTemplate>
 );
 
-LoginPage.propTypes = {
-  authenticate: PropTypes.func.isRequired,
-  userID: PropTypes.oneOfType([PropTypes.string.isRequired, null]),
+RegisterPage.propTypes = {
+  register: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }),
 };
 
-LoginPage.defaultProps = {
-  userID: null,
+RegisterPage.defaultProps = {
+  history: {
+    push: () => {},
+  },
 };
 
-const mapStateToProps = ({ userID = null }) => ({
-  userID,
-});
-
-export default connect(mapStateToProps, { authenticate: authenticateAction })(LoginPage);
+export default connect(null, { register: registerAction })(RegisterPage);
