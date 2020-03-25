@@ -6,8 +6,8 @@ import Card from 'components/molecules/Card/Card';
 const Notes = ({ notes }) => {
   return (
     <>
-      {notes.map(({ id, title, content, created }) => (
-        <Card key={title} id={id} title={title} content={content} created={created} />
+      {notes.map(({ _id: id, title, content }) => (
+        <Card key={title} id={id} title={title} content={content} />
       ))}
     </>
   );
@@ -16,10 +16,9 @@ const Notes = ({ notes }) => {
 Notes.propTypes = {
   notes: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
-      created: PropTypes.string.isRequired,
     }),
   ),
 };

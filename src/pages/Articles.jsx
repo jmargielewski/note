@@ -6,15 +6,8 @@ import Card from 'components/molecules/Card/Card';
 const Articles = ({ articles }) => {
   return (
     <>
-      {articles.map(({ id, title, content, articleUrl, created }) => (
-        <Card
-          key={title}
-          id={id}
-          title={title}
-          content={content}
-          articleUrl={articleUrl}
-          created={created}
-        />
+      {articles.map(({ _id: id, title, content, articleUrl }) => (
+        <Card key={title} id={id} title={title} content={content} articleUrl={articleUrl} />
       ))}
     </>
   );
@@ -23,11 +16,10 @@ const Articles = ({ articles }) => {
 Articles.propTypes = {
   articles: PropTypes.arrayOf(
     PropTypes.shape({
-      id: PropTypes.string.isRequired,
+      _id: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
       content: PropTypes.string.isRequired,
       articleUrl: PropTypes.string.isRequired,
-      created: PropTypes.string.isRequired,
     }),
   ),
 };

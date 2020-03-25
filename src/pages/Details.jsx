@@ -29,12 +29,6 @@ const StyledHeading = styled(Heading)`
   }
 `;
 
-const StyledParagraph = styled(Paragraph)`
-  margin: 25px 0 0 0;
-
-  font-weight: ${({ theme }) => theme.bold};
-`;
-
 const StyledLink = styled.a`
   display: block;
   font-weight: ${({ theme }) => theme.bold};
@@ -75,7 +69,7 @@ class Details extends Component {
   }
 
   render() {
-    // const { match, title, created, content, twitterName, articleUrl } = this.props;
+    // const { match, title, content, twitterName, articleUrl } = this.props;
     const { pageType } = this.state;
 
     const dummyArticle = {
@@ -84,7 +78,6 @@ class Details extends Component {
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
       articleUrl: 'https://youtube.com',
-      created: '1 day',
     };
 
     return (
@@ -94,7 +87,6 @@ class Details extends Component {
             <StyledHeading big as="h1">
               {dummyArticle.title}
             </StyledHeading>
-            <StyledParagraph>{dummyArticle.created}</StyledParagraph>
           </StyledPageHeader>
           <Paragraph>{dummyArticle.content}</Paragraph>
           {pageType === 'articles' && (
@@ -117,13 +109,12 @@ class Details extends Component {
 
 Details.propTypes = {
   // title: PropTypes.string.isRequired,
-  // created: PropTypes.string.isRequired,
   // content: PropTypes.string.isRequired,
   // articleUrl: PropTypes.string.isRequired,
   // twitterName: PropTypes.string.isRequired,
-  match: {
+  match: PropTypes.shape({
     path: PropTypes.string.isRequired,
-  },
+  }),
 };
 
 Details.defaultProps = {
