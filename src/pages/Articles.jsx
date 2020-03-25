@@ -1,17 +1,28 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Card from 'components/molecules/Card/Card';
+import { fetchItems } from 'actions';
 
-const Articles = ({ articles }) => {
-  return (
-    <>
-      {articles.map(({ _id: id, title, content, articleUrl }) => (
-        <Card key={title} id={id} title={title} content={content} articleUrl={articleUrl} />
-      ))}
-    </>
-  );
-};
+class Articles extends Component {
+  componentDidMount() {
+    const { fetchArticles } = this.props;
+
+    fetchArticles('articles');
+  }
+
+  render() {
+    const { articles } = this.props;
+
+    return (
+      <>
+        {articles.map(({ _id: id, title, content, articleUrl }) => (
+          <Card key={title} id={id} title={title} content={content} articleUrl={articleUrl} />
+        ))}
+      </>
+    );
+  }
+}
 
 Articles.propTypes = {
   articles: PropTypes.arrayOf(
@@ -22,6 +33,7 @@ Articles.propTypes = {
       articleUrl: PropTypes.string.isRequired,
     }),
   ),
+  fetchArticles: PropTypes.func.isRequired,
 };
 
 Articles.defaultProps = {
@@ -30,4 +42,4 @@ Articles.defaultProps = {
 
 const mapStateToProps = ({ articles }) => ({ articles });
 
-export default connect(mapStateToProps)(Articles);
+export default connect(mapStateToProps, { fetchArticles: fetchItems })(Articles);

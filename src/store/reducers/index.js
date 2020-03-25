@@ -1,9 +1,16 @@
-import { ADD_ITEM, REMOVE_ITEM, AUTHENTICATE_SUCCESS } from 'actions';
+import {
+  ADD_ITEM,
+  REMOVE_ITEM,
+  AUTHENTICATE_SUCCESS,
+  // FETCH_ITEMS_REQUEST,
+  FETCH_ITEMS_SUCCESS,
+  // FETCH_ITEMS_FAILURE,
+} from 'actions';
 
 const initState = {
   twitters: [
     {
-      id: '1',
+      _id: '1',
       title: 'Hello Roman',
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -11,7 +18,7 @@ const initState = {
       twitterName: 'kubaleski',
     },
     {
-      id: '2',
+      _id: '2',
       title: 'Redux guy',
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -19,7 +26,7 @@ const initState = {
       twitterName: 'dan_abramov',
     },
     {
-      id: '3',
+      _id: '3',
       title: 'React router stuff',
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -27,7 +34,7 @@ const initState = {
       twitterName: 'mjackson',
     },
     {
-      id: '4',
+      _id: '4',
       title: 'Super animacje!',
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -37,7 +44,7 @@ const initState = {
   ],
   articles: [
     {
-      id: '1',
+      _id: '1',
       title: 'React on my mind',
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -45,7 +52,7 @@ const initState = {
       created: '1 day',
     },
     {
-      id: '2',
+      _id: '2',
       title: 'Wish you React',
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -53,7 +60,7 @@ const initState = {
       created: '1 day',
     },
     {
-      id: '3',
+      _id: '3',
       title: 'You gave React a bad name',
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -61,7 +68,7 @@ const initState = {
       created: '5 days',
     },
     {
-      id: '4',
+      _id: '4',
       title: 'Is it React you looking for?',
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
@@ -71,39 +78,46 @@ const initState = {
   ],
   notes: [
     {
-      id: '1',
+      _id: '1',
       title: 'Wake me up when Vue ends',
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
       created: '1 day',
     },
     {
-      id: '2',
+      _id: '2',
       title: 'Como es An Gular?',
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
       created: '1 day',
     },
     {
-      id: '3',
+      _id: '3',
       title: 'Du bist Reactish',
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
       created: '5 days',
     },
     {
-      id: '4',
+      _id: '4',
       title: 'Reactuj się kto moze!',
       content:
         'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
       created: '10 days',
     },
   ],
-  userID: null,
+  userID: '5e7922d7b3376104666a5190',
 };
+
+// const _initSate = {};
 
 const rootReducer = (state = initState, action) => {
   switch (action.type) {
+    case FETCH_ITEMS_SUCCESS:
+      return {
+        ...state,
+        [action.payload.itemType]: [...action.payload.data],
+      };
     case AUTHENTICATE_SUCCESS:
       return {
         ...state,

@@ -11,6 +11,10 @@ export const REGISTER_REQUEST = 'REGISTER_REQUEST';
 export const REGISTER_SUCCESS = 'REGISTER_SUCCESS';
 export const REGISTER_FAILURE = 'REGISTER_FAILURE';
 
+export const FETCH_ITEMS_REQUEST = 'FETCH_ITEMS_REQUEST';
+export const FETCH_ITEMS_SUCCESS = 'FETCH_ITEMS_SUCCESS';
+export const FETCH_ITEMS_FAILURE = 'FETCH_ITEMS_FAILURE';
+
 export const removeItem = (itemType, id) => ({
   type: REMOVE_ITEM,
   payload: {
@@ -64,5 +68,24 @@ export const register = (username, password) => dispatch => {
     .catch(err => {
       console.log(err);
       dispatch({ type: REGISTER_FAILURE });
+    });
+};
+
+export const fetchItems = itemType => (dispatch, getState) => {
+  dispatch({ type: FETCH_ITEMS_REQUEST });
+
+  return axios
+    .get('http://localhost:9000/api/notes/type', {
+      params: {
+        type: itemType,
+        userID: getState().userID,
+      },
+    })
+    .then(({ data }) => {
+      dispatch({ type: FETCH_ITEMS_SUCCESS, payload: { data, itemType } });
+    })
+    .catch(err => {
+      console.log(err);
+      dispatch({ type: FETCH_ITEMS_FAILURE });
     });
 };
