@@ -2,10 +2,12 @@ import React, { Component } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { PropTypes } from 'prop-types';
+import axios from 'axios';
+import { connect } from 'react-redux';
 import Heading from 'components/atoms/Heading/Heading';
 import Paragraph from 'components/atoms/Paragraph/Paragraph';
 import Button from 'components/atoms/Button/Button';
-import routes from '../routes';
+import withContext from '../hoc/withContext';
 
 const StyledWrapper = styled.div`
   padding: 25px 150px 25px 70px;
@@ -48,57 +50,55 @@ const StyledImage = styled.img`
 `;
 
 class Details extends Component {
-  state = { pageType: 'notes' };
+  state = {
+    activeItem: {
+      title: '',
+      content: '',
+      activeUrl: '',
+      twitterName: '',
+    },
+  };
 
   componentDidMount() {
-    const { match } = this.props;
+    const { activeItem: activeItems } = this.props;
 
-    switch (match.path) {
-      case routes.twitter:
-        this.setState({ pageType: 'twitters' });
-        break;
-      case routes.note:
-        this.setState({ pageType: 'notes' });
-        break;
-      case routes.article:
-        this.setState({ pageType: 'article' });
-        break;
-      default:
-        this.setState({ pageType: 'notes' });
+    if (activeItems.length) {
+      const [activeItem] = activeItems;
+      this.setState({ activeItem });
+    } else {
+      const { match } = this.props;
+      const { id } = match.params;
+
+      axios
+        .get(`http://localhost:9000/api/note/${id}`)
+        .then(({ data }) => this.setState({ activeItem: data }))
+        .catch(err => console.log(err));
     }
   }
 
   render() {
-    // const { match, title, content, twitterName, articleUrl } = this.props;
-    const { pageType } = this.state;
-
-    const dummyArticle = {
-      id: 1,
-      title: 'React on my mind',
-      content:
-        'Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus, tempora quibusdam natus modi tempore esse adipisci, dolore odit animi',
-      articleUrl: 'https://youtube.com',
-    };
+    const { activeItem } = this.state;
+    const { pageContext } = this.props;
 
     return (
       <>
         <StyledWrapper>
           <StyledPageHeader>
             <StyledHeading big as="h1">
-              {dummyArticle.title}
+              {activeItem.title}
             </StyledHeading>
           </StyledPageHeader>
-          <Paragraph>{dummyArticle.content}</Paragraph>
-          {pageType === 'articles' && (
-            <StyledLink href={dummyArticle.articleUrl}>Open article</StyledLink>
+          <Paragraph>{activeItem.content}</Paragraph>
+          {pageContext === 'articles' && (
+            <StyledLink href={activeItem.articleUrl}>Open article</StyledLink>
           )}
-          {pageType === 'twitters' && (
+          {pageContext === 'twitters' && (
             <StyledImage
-              alt={dummyArticle.title}
-              href={`https://avatars.io/twitter/${dummyArticle.twitterName}`}
+              alt={activeItem.title}
+              href={`https://avatars.io/twitter/${activeItem.twitterName}`}
             />
           )}
-          <Button as={Link} to={`/${pageType}`} activecolor={pageType}>
+          <Button as={Link} to={`/${pageContext}`} activecolor={pageContext}>
             save / close
           </Button>
         </StyledWrapper>
@@ -108,19 +108,40 @@ class Details extends Component {
 }
 
 Details.propTypes = {
-  // title: PropTypes.string.isRequired,
-  // content: PropTypes.string.isRequired,
-  // articleUrl: PropTypes.string.isRequired,
-  // twitterName: PropTypes.string.isRequired,
   match: PropTypes.shape({
-    path: PropTypes.string.isRequired,
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }).isRequired,
   }),
+  activeItem: PropTypes.arrayOf(PropTypes.object),
+  pageContext: PropTypes.string.isRequired,
 };
 
 Details.defaultProps = {
   match: {
-    path: '',
+    params: {
+      id: '',
+    },
   },
+  activeItem: [
+    {
+      title: '',
+      content: '',
+      activeUrl: '',
+      twitterName: '',
+    },
+  ],
 };
 
-export default Details;
+const mapStateToProps = (state, ownProps) => {
+  if (state[ownProps.pageContext]) {
+    return {
+      /* eslint-disable no-underscore-dangle */
+      activeItem: state[ownProps.pageContext].filter(item => item._id === ownProps.match.params.id),
+      /* eslint-enable */
+    };
+  }
+  return null;
+};
+
+export default withContext(connect(mapStateToProps)(Details));
