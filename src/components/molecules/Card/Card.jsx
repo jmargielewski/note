@@ -77,7 +77,7 @@ class Card extends Component {
     const { redirect } = this.state;
 
     if (redirect) {
-      return <Redirect to={`${pageContext}/${id}`} />;
+      return <Redirect push to={`${pageContext}/${id}`} />;
     }
 
     return (
