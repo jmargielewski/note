@@ -60,10 +60,9 @@ class Details extends Component {
   };
 
   componentDidMount() {
-    const { activeItem: activeItems } = this.props;
+    const { activeItem } = this.props;
 
-    if (activeItems.length) {
-      const [activeItem] = activeItems;
+    if (activeItem) {
       this.setState({ activeItem });
     } else {
       const { match } = this.props;
@@ -113,7 +112,12 @@ Details.propTypes = {
       id: PropTypes.string,
     }).isRequired,
   }),
-  activeItem: PropTypes.arrayOf(PropTypes.object),
+  activeItem: PropTypes.shape({
+    title: '',
+    content: '',
+    activeUrl: '',
+    twitterName: '',
+  }),
   pageContext: PropTypes.string.isRequired,
 };
 
@@ -137,7 +141,7 @@ const mapStateToProps = (state, ownProps) => {
   if (state[ownProps.pageContext]) {
     return {
       /* eslint-disable no-underscore-dangle */
-      activeItem: state[ownProps.pageContext].filter(item => item._id === ownProps.match.params.id),
+      activeItem: state[ownProps.pageContext].find(item => item._id === ownProps.match.params.id),
       /* eslint-enable */
     };
   }
