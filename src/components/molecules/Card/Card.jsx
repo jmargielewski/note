@@ -28,6 +28,10 @@ const InnerWrapper = styled.div`
   padding: 17px 30px 10px;
   background-color: ${({ activecolor, theme }) => (activecolor ? theme[activecolor] : 'white')};
 
+  &:first-of-type {
+    cursor: pointer;
+  }
+
   ${({ flex }) =>
     flex &&
     css`
@@ -81,8 +85,8 @@ class Card extends Component {
     }
 
     return (
-      <StyledWrapper onClick={this.handleCardClick}>
-        <InnerWrapper activecolor={pageContext}>
+      <StyledWrapper>
+        <InnerWrapper onClick={this.handleCardClick} activecolor={pageContext}>
           <StyledHeading>{title}</StyledHeading>
           {pageContext === 'twitters' && (
             <StyledAvatar src={`https://avatars.io/twitter/${twitterName}`} />

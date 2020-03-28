@@ -140,9 +140,7 @@ Details.defaultProps = {
 const mapStateToProps = (state, ownProps) => {
   if (state[ownProps.pageContext]) {
     return {
-      /* eslint-disable no-underscore-dangle */
       activeItem: state[ownProps.pageContext].find(item => item._id === ownProps.match.params.id),
-      /* eslint-enable */
     };
   }
   return null;
